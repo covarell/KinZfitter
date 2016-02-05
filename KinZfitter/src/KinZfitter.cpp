@@ -241,6 +241,9 @@ double KinZfitter::GetRefitM4lErr()
   pTErrs.push_back(pTerrsZ1REFIT_[0]); pTErrs.push_back(pTerrsZ1REFIT_[1]);
   pTErrs.push_back(pTerrsZ2REFIT_[0]); pTErrs.push_back(pTerrsZ2REFIT_[1]);
 
+  if(pTerrsZ1REFIT_[0]==0 || pTerrsZ1REFIT_[0]==0)
+   return GetM4lErr();
+
   if(pTerrsZ1REFIT_[0]==0||pTerrsZ1REFIT_[1]==0)
   return GetM4lErr();
 
