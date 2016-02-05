@@ -56,7 +56,7 @@ using namespace std;
 class KinZfitter {
 public:
 	
-        KinZfitter(bool isData);
+        KinZfitter(TString pdf, bool isData);
 
 	/// Kinematic fit of lepton momenta
         /// HelperFunction class to calcluate per lepton(+photon) pT error
@@ -105,7 +105,8 @@ private:
 
         /// True mZ/mZ1 shape, final states
         TString PDFName_, fs_;      
-	
+        TString pdf_;	
+
 	/// debug flag
 	bool debug_;
        

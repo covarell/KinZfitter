@@ -14,10 +14,11 @@
 /// KinZfitter::KinZfitter - constructor/
 ///----------------------------------------------------------------------------------------------
 
-KinZfitter::KinZfitter(bool isData)
+KinZfitter::KinZfitter(TString pdf, bool isData)
 {    
 
      PDFName_ = "GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8";
+     pdf_ = pdf;
 
      debug_ = false;
 
@@ -240,6 +241,9 @@ double KinZfitter::GetRefitM4lErr()
   pTErrs.push_back(pTerrsZ1REFIT_[0]); pTErrs.push_back(pTerrsZ1REFIT_[1]);
   pTErrs.push_back(pTerrsZ2REFIT_[0]); pTErrs.push_back(pTerrsZ2REFIT_[1]);
 
+  if(pTerrsZ1REFIT_[0]==0||pTerrsZ1REFIT_[1]==0)
+  return GetM4lErr();
+
   for(unsigned int ifsr1 = 0; ifsr1<p4sZ1phREFIT_.size(); ifsr1++){
 
       p4s.push_back(p4sZ1phREFIT_[ifsr1]);
@@ -268,6 +272,9 @@ double KinZfitter::GetRefitM4lErrFullCov()
 
   p4s.push_back(p4sZ1REFIT_[0]);p4s.push_back(p4sZ1REFIT_[1]);
   pTErrs.push_back(pTerrsZ1REFIT_[0]); pTErrs.push_back(pTerrsZ1REFIT_[1]);
+
+  if(pTerrsZ1REFIT_[0]==0||pTerrsZ1REFIT_[1]==0)
+  return GetM4lErr();
 
   if(p4sZ1phREFIT_.size()>=1){
    p4s.push_back(p4sZ1phREFIT_[0]); pTErrs.push_back(pTerrsZ1phREFIT_[0]);
@@ -697,7 +704,15 @@ int KinZfitter::PerZ1Likelihood(double & l1, double & l2, double & lph1, double 
     //nll = PDFRelBWxCBxgauss->createNLL(*pTs);
     //RooMinuit(*nll).migrad();
 
-    RooFitResult* r = PDFRelBWxCBxgauss->fitTo(*pTs,RooFit::Save(),RooFit::PrintLevel(-1));
+    RooFitResult* r;
+
+    if(pdf_!="BW")
+     r = PDFRelBWxCBxgauss->fitTo(*pTs,RooFit::Save(),RooFit::PrintLevel(-1));
+    else
+    {
+     cout<<"refitting using RelBW"<<endl;
+     r = RelBW.fitTo(*pTs,RooFit::Save(),RooFit::PrintLevel(-1));
+    }
     const TMatrixDSym& covMatrix = r->covarianceMatrix();
    
     const RooArgList& finalPars = r->floatParsFinal();
