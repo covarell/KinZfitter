@@ -393,6 +393,28 @@ double KinZfitter::GetM4lErr()
 
 }
 
+double KinZfitter::GetMZ1Err()
+{
+
+  vector<TLorentzVector> p4s;
+  vector<double> pTErrs;
+
+  p4s.push_back(p4sZ1_[0]);p4s.push_back(p4sZ1_[1]);
+
+  pTErrs.push_back(pTerrsZ1_[0]); pTErrs.push_back(pTerrsZ1_[1]);
+
+  for(unsigned int ifsr1 = 0; ifsr1<p4sZ1ph_.size(); ifsr1++){
+
+      p4s.push_back(p4sZ1ph_[ifsr1]);
+      pTErrs.push_back(pTerrsZ1ph_[ifsr1]);
+
+  }
+
+  return helperFunc_->masserror(p4s,pTErrs);
+
+}
+
+
 vector<TLorentzVector> KinZfitter::GetRefitP4s()
 {
 

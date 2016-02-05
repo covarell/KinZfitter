@@ -72,8 +72,10 @@ public:
         double GetRefitM4l();
         double GetM4l();
 
-        double GetRefitM4lErr();
         double GetM4lErr();
+        double GetMZ1Err();
+
+        double GetRefitM4lErr();
         double GetRefitM4lErrFullCov();
 
         // cov matrix change for spherical coordinate to Cartisean coordinates
