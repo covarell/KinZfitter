@@ -21,6 +21,8 @@ KinZfitter::KinZfitter(bool isData)
 
      debug_ = false;
 
+     pdf_ = "RelBW";
+
      if(debug_) std::cout << "KinZfitter. The debug flag is ON with "<<PDFName_<< std::endl;
 	
      /// Initialise HelperFunction
