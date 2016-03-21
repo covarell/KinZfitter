@@ -145,8 +145,9 @@ double HelperFunction::masserror( std::vector<TLorentzVector> Lep, std::vector<d
 
 double HelperFunction::pterr( reco::Candidate *c, bool isData){
 
-  reco::GsfElectron *gsf; reco::Muon *mu;
+  reco::GsfElectron *gsf; pat::Muon *mu;
   reco::PFCandidate *pf;
+  pat::Jet *jet;
 
   double pterrLep = 0.0;
 
@@ -154,23 +155,26 @@ double HelperFunction::pterr( reco::Candidate *c, bool isData){
   {
     pterrLep=pterr(gsf, isData);
   }
-  else if ((mu = dynamic_cast<reco::Muon *> (&(*c)) ) != 0)
+  else if ((mu = dynamic_cast<pat::Muon *> (&(*c)) ) != 0)
   {
     pterrLep=pterr(mu, isData);
+  }
+  else if ((jet = dynamic_cast<pat::Jet *> (&(*c)) ) != 0)
+  {
+    pterrLep=jet->userFloat("jec_unc");
   }
   else if ((pf = dynamic_cast<reco::PFCandidate *> (&(*c)) ) != 0)
   { 
     pterrLep=pterr(c, isData);
   }
 
-
   return pterrLep;
 
 }
 
-double HelperFunction::pterr( reco::Muon* mu, bool isData){
+double HelperFunction::pterr( pat::Muon* mu, bool isData){
 
-        double pterr = mu->muonBestTrack()->ptError();
+        double pterr = mu->userFloat("correctedPtError");
 
         return pterr;
 }

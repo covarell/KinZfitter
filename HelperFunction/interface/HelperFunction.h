@@ -53,6 +53,7 @@
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/PFParticle.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
 #include <cmath>
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
@@ -101,7 +102,7 @@ class HelperFunction
       double pterr(TLorentzVector fsrPhoton);
 
       double pterr(reco::GsfElectron* electron, bool isData);
-      double pterr(reco::Muon* muon, bool isData);
+      double pterr(pat::Muon* muon, bool isData);
 
       double masserror(std::vector<TLorentzVector> p4s, std::vector<double> pTErrs);
 

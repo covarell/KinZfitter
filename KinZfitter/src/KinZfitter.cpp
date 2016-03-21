@@ -48,7 +48,7 @@ void KinZfitter::Setup(std::vector< reco::Candidate* > selectedLeptons, std::map
      if(debug_) cout<<"list ids"<<endl;
      if(debug_) cout<<"IDs[0] "<<idsZ1_[0]<<" IDs[1] "<<idsZ1_[1]<<" IDs[2] "<<idsZ2_[0]<<" IDs[3] "<<idsZ2_[1]<<endl;
 
-     fs_=""; 
+     fs_="2l2jet"; 
      if(abs(idsZ1_[0])==11 && abs(idsZ2_[0])==11) fs_="4e";
      if(abs(idsZ1_[0])==13 && abs(idsZ2_[0])==13) fs_="4mu";   
      if(abs(idsZ1_[0])==11 && abs(idsZ2_[0])==13) fs_="2e2mu";
@@ -126,11 +126,11 @@ void KinZfitter::initZs(std::vector< reco::Candidate* > selectedLeptons, std::ma
 
         if(debug_) cout<<"init fsr photons"<<endl;
 
-        for(unsigned int ifsr = 0; ifsr<4; ifsr++)
+        for(unsigned int ifsr = 0; ifsr<selectedFsrPhotons.size(); ifsr++)
          {
 
             TLorentzVector p4 = selectedFsrPhotons[ifsr];
-            if(selectedFsrPhotons[ifsr].Pt()==0) continue;
+            if(selectedFsrPhotons[ifsr].Pt()<0.000005) continue;
 
             if(debug_) cout<<"ifsr "<<ifsr<<endl;
 
